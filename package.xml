@@ -1,35 +1,71 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0">
-  <name>Mail_IMAPv2</name>
-  <summary>Provides a c-client backend for webmail.</summary>
-  <description>Mail_IMAPv2 provides a simplified backend for working with the c-client (IMAP) extension. It serves as an OO wrapper for commonly used c-client functions. It provides structure and header parsing as well as body retrieval.
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Mail_IMAPv2</name>
+ <channel>pear.php.net</channel>
+ <summary>Provides a c-client backend for webmail.</summary>
+ <description>Mail_IMAPv2 provides a simplified backend for working with the c-client (IMAP) extension. It serves as an OO wrapper for commonly used c-client functions. It provides structure and header parsing as well as body retrieval.
 Mail_IMAPv2 provides a simple inbox example that demonstrates its ability to parse and view simple and multipart email messages.
 Mail_IMAPv2 also provides a connection wizard to determine the correct protocol and port settings for a remote mail server, all you need to provide is a server, a username and a password.
 Mail_IMAPv2 may be used as a webmail backend or as a component in a mailing list manager.
 This package requires the c-client extension.  To download the latest version of the c-client extension goto: http://www.php.net/imap.</description>
-  <maintainers>
-    <maintainer>
-      <user>richy</user>
-      <name>Richard York</name>
-      <email>richy@smilingsouls.net</email>
-      <role>lead</role>
-    </maintainer>
-  </maintainers>
+ <lead>
+  <name>Richard York</name>
+  <user>richy</user>
+  <email>richy@smilingsouls.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-11-02</date>
+ <time>16:37:43</time>
+ <version>
+  <release>0.2.0</release>
+  <api>0.2.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>* Major bug in broken nested message parsing (affected multipart/mixed messages), sub messages weren&apos;t being retrieved.</notes>
+ <contents>
+  <dir baseinstalldir="Mail" name="/">
+   <file baseinstalldir="" md5sum="dfea6695813b74a7242794a46714f49a" name="Mail/IMAPv2.php" role="php" />
+   <file baseinstalldir="" md5sum="af2541193cc34a7a13c46bc3341bc136" name="Mail/IMAPv2/Debug/Debug.php" role="php" />
+   <file baseinstalldir="" md5sum="05e3591456e48a2d6fcb239617fdf8f0" name="Mail/IMAPv2/ManageMB/ManageMB.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <extension>
+    <name>imap</name>
+   </extension>
+  </required>
+  <optional>
+   <package>
+    <name>Net_URL</name>
+    <channel>pear.php.net</channel>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
   <release>
-    <version>0.2.0</version>
-    <date>2005-05-15</date>
-    <license>PHP</license>
-    <state>beta</state>
-    <notes>* Major bug in broken nested message parsing (affected multipart/mixed messages), sub messages weren't being retrieved.</notes>
-    <deps>
-      <dep type="ext" rel="has">imap</dep>
-      <dep type="pkg" rel="has" optional="yes">Net_URL</dep>
-    </deps>
-    <filelist>
-      <file role="php" baseinstalldir="Mail" name="IMAPv2.php"/>
-      <file role="php" baseinstalldir="Mail" name="IMAPv2\ManageMB\ManageMB.php"/>
-      <file role="php" baseinstalldir="Mail" name="IMAPv2\Debug\Debug.php"/>
-    </filelist>
+   <version>
+    <release>0.2.0</release>
+    <api>0.2.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-11-02</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>* Major bug in broken nested message parsing (affected multipart/mixed messages), sub messages weren&apos;t being retrieved.</notes>
   </release>
+ </changelog>
 </package>
