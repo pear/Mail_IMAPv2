@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.7.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>Mail_IMAPv2</name>
  <channel>pear.php.net</channel>
  <summary>Provides a c-client backend for webmail.</summary>
@@ -14,10 +14,10 @@ This package requires the c-client extension.  To download the latest version of
   <email>richy@smilingsouls.net</email>
   <active>yes</active>
  </lead>
- <date>2008-11-02</date>
- <time>16:37:43</time>
+ <date>2010-10-12</date>
+ <time>22:45:27</time>
  <version>
-  <release>0.2.0</release>
+  <release>0.2.1</release>
   <api>0.2.0</api>
  </version>
  <stability>
@@ -25,12 +25,18 @@ This package requires the c-client extension.  To download the latest version of
   <api>beta</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
- <notes>* Major bug in broken nested message parsing (affected multipart/mixed messages), sub messages weren&apos;t being retrieved.</notes>
+ <notes>
+QA release
+SVN layout
+Bug #4264  	foreach() called without argument check
+Bug #4554 	_personal header info is not properly decoded
+Bug #5621 	Mail_IMAP_connection_wizard notls bug
+ </notes>
  <contents>
-  <dir baseinstalldir="Mail" name="/">
-   <file baseinstalldir="" md5sum="dfea6695813b74a7242794a46714f49a" name="Mail/IMAPv2.php" role="php" />
-   <file baseinstalldir="" md5sum="af2541193cc34a7a13c46bc3341bc136" name="Mail/IMAPv2/Debug/Debug.php" role="php" />
-   <file baseinstalldir="" md5sum="05e3591456e48a2d6fcb239617fdf8f0" name="Mail/IMAPv2/ManageMB/ManageMB.php" role="php" />
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="" md5sum="3df38a9adb38fef203d872e19528ac9b" name="Mail/IMAPv2.php" role="php" />
+   <file baseinstalldir="" md5sum="6fe7d3e22186c410848414c073a8f15c" name="Mail/IMAPv2/Debug/Debug.php" role="php" />
+   <file baseinstalldir="" md5sum="98950a6536b186b7530d2f3f90309e2b" name="Mail/IMAPv2/ManageMB/ManageMB.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -65,7 +71,28 @@ This package requires the c-client extension.  To download the latest version of
    </stability>
    <date>2008-11-02</date>
    <license uri="http://www.php.net/license">PHP</license>
-   <notes>* Major bug in broken nested message parsing (affected multipart/mixed messages), sub messages weren&apos;t being retrieved.</notes>
+   <notes>
+* Major bug in broken nested message parsing (affected multipart/mixed messages), sub messages weren&apos;t being retrieved.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.2.1</release>
+    <api>0.2.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2010-10-12</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+QA release
+SVN layout
+Bug #4264  	foreach() called without argument check
+Bug #4554 	_personal header info is not properly decoded
+Bug #5621 	Mail_IMAP_connection_wizard notls bug
+   </notes>
   </release>
  </changelog>
 </package>
