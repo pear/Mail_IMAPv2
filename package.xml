@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>Mail_IMAPv2</name>
  <channel>pear.php.net</channel>
  <summary>Provides a c-client backend for webmail.</summary>
@@ -14,8 +14,8 @@ This package requires the c-client extension.  To download the latest version of
   <email>richy@smilingsouls.net</email>
   <active>yes</active>
  </lead>
- <date>2010-10-12</date>
- <time>22:45:27</time>
+ <date>2011-12-09</date>
+ <time>19:42:40</time>
  <version>
   <release>0.2.1</release>
   <api>0.2.0</api>
@@ -35,8 +35,9 @@ Bug #5621 	Mail_IMAP_connection_wizard notls bug
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="" md5sum="3df38a9adb38fef203d872e19528ac9b" name="Mail/IMAPv2.php" role="php" />
-   <file baseinstalldir="" md5sum="6fe7d3e22186c410848414c073a8f15c" name="Mail/IMAPv2/Debug/Debug.php" role="php" />
-   <file baseinstalldir="" md5sum="98950a6536b186b7530d2f3f90309e2b" name="Mail/IMAPv2/ManageMB/ManageMB.php" role="php" />
+   <file baseinstalldir="/" md5sum="6fe7d3e22186c410848414c073a8f15c" name="Mail/IMAPv2/Debug.php" role="php" />
+   <file baseinstalldir="/" md5sum="6e1545cead9c69f271129c537fb5356c" name="Mail/IMAPv2/ManageMB.php" role="php" />
+   <file baseinstalldir="/" md5sum="48e17cbc87dfd5891cc370a208f7b0c2" name="README" role="data" />
   </dir>
  </contents>
  <dependencies>
@@ -84,7 +85,7 @@ Bug #5621 	Mail_IMAP_connection_wizard notls bug
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2010-10-12</date>
+   <date>2011-12-09</date>
    <license uri="http://www.php.net/license">PHP</license>
    <notes>
 QA release
