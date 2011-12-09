@@ -88,42 +88,39 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
             case 'create':
             {
                 if (@imap_createmailbox($this->mailbox, imap_utf7_encode($this->mailboxInfo['host'].'INBOX.'.$mb_name))) {
-                    $ret = TRUE;
+                    return true;
                 } else {
                     $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to create MB: '.$mb_name);
-                    $ret = FALSE;
+                    return false;
                 }
-                break;
             }
             case 'rename':
             {
                 if (empty($mb_rename)) {
                     $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'No mailbox provided to rename.');
                 }
+                else
                 if (@imap_renamemailbox($this->mailbox, $this->mailboxInfo['host'].'INBOX.'.$mb_name, $this->mailboxInfo['host'].'INBOX.'.$mb_rename)) {
-                    $ret = TRUE;
+                    return true;
                 } else {
                     $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to rename MB: '.$mb_name);
-                    $ret = FALSE;
+                    return false;
                 }
-                break;
             }
             case 'delete':
             {
                 if (@imap_deletemailbox($this->mailbox, $this->mailboxInfo['host'].'INBOX.'.$mb_name)) {
-                    $ret = TRUE;
+                    return true;
                 } else {
                     $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to delete MB: '.$mb_name);
-                    $ret = FALSE;
+                    return false;
                 }
-                break;
             }
             default:
             {
                 $this->error->push(Mail_IMAPv2_ERROR_INVALID_ACTION, 'error', array('action' => $action, 'arg' => '$action'));
-                $ret = FALSE;
+                return false;
             }
-            return $ret;
         }
     }
 
