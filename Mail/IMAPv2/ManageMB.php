@@ -54,16 +54,6 @@
 */
 class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
 
-	/**
-	*
-	* @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP_ManageMB/Mail_IMAP_ManageMB
-	*/
-	
-    function Mail_IMAPv2_ManageMB($connection, $get_info = TRUE)
-    {
-        $this->Mail_IMAPv2($connection, $get_info);
-    }
-
     /**
     * This method creates, renames and deletes mailboxes from the server.
     *
@@ -90,20 +80,20 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
                 if (@imap_createmailbox($this->mailbox, imap_utf7_encode($this->mailboxInfo['host'].'INBOX.'.$mb_name))) {
                     return true;
                 } else {
-                    $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to create MB: '.$mb_name);
+                    $this->error->push(Mail_IMAPv2::ERROR, 'error', NULL, 'Unable to create MB: '.$mb_name);
                     return false;
                 }
             }
             case 'rename':
             {
                 if (empty($mb_rename)) {
-                    $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'No mailbox provided to rename.');
+                    $this->error->push(Mail_IMAPv2::ERROR, 'error', NULL, 'No mailbox provided to rename.');
                 }
                 else
                 if (@imap_renamemailbox($this->mailbox, $this->mailboxInfo['host'].'INBOX.'.$mb_name, $this->mailboxInfo['host'].'INBOX.'.$mb_rename)) {
                     return true;
                 } else {
-                    $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to rename MB: '.$mb_name);
+                    $this->error->push(Mail_IMAPv2::ERROR, 'error', NULL, 'Unable to rename MB: '.$mb_name);
                     return false;
                 }
             }
@@ -112,13 +102,13 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
                 if (@imap_deletemailbox($this->mailbox, $this->mailboxInfo['host'].'INBOX.'.$mb_name)) {
                     return true;
                 } else {
-                    $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to delete MB: '.$mb_name);
+                    $this->error->push(Mail_IMAPv2::ERROR, 'error', NULL, 'Unable to delete MB: '.$mb_name);
                     return false;
                 }
             }
             default:
             {
-                $this->error->push(Mail_IMAPv2_ERROR_INVALID_ACTION, 'error', array('action' => $action, 'arg' => '$action'));
+                $this->error->push(Mail_IMAPv2::ERROR_INVALID_ACTION, 'error', array('action' => $action, 'arg' => '$action'));
                 return false;
             }
         }
@@ -151,7 +141,7 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
         if (is_array($msg_list)) {
             $msg_list = implode($msg_list, ',');
         } else {
-            $this->error->push(Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY, 'error', array('arg' => '$msg_list'));
+            $this->error->push(Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY, 'error', array('arg' => '$msg_list'));
             return FALSE;
         }
         switch ($action) {
@@ -167,7 +157,7 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
             }
             default:
             {
-                $this->error->push(Mail_IMAPv2_ERROR_INVALID_ACTION, 'error', array('action' => $action, 'arg' => '$action'));
+                $this->error->push(Mail_IMAPv2::ERROR_INVALID_ACTION, 'error', array('action' => $action, 'arg' => '$action'));
                 return FALSE;
             }
         }
@@ -177,7 +167,7 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
         if (@$action($this->mailbox, $msg_list, $dest_mb, $opt)) {
             $ret = TRUE;
         } else {
-            $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to copy or move messages, imap_mail_'.$action.' failed!');
+            $this->error->push(Mail_IMAPv2::ERROR, 'error', NULL, 'Unable to copy or move messages, imap_mail_'.$action.' failed!');
             $ret = FALSE;
         }
         return $ret;
@@ -204,7 +194,7 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
 
             foreach ($messages as $msg) {
                 if (!@imap_append($this->mailbox, $this->mailboxInfo['host'].$dest_mb, $msg, $opt)) {
-                    $this->error->push(Mail_IMAPv2_ERROR, 'error', NULL, 'Unable to import message, imap_append failed!');
+                    $this->error->push(Mail_IMAPv2::ERROR, 'error', NULL, 'Unable to import message, imap_append failed!');
                     $ret = FALSE;
                 }
             }
@@ -213,7 +203,7 @@ class Mail_IMAPv2_ManageMB extends Mail_IMAPv2 {
                 $ret = TRUE;
             }
         } else {
-            $this->error->push(Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY, 'error', array('arg' => '$messages'));
+            $this->error->push(Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY, 'error', array('arg' => '$messages'));
             $ret = FALSE;
         }
         return $ret;

@@ -51,14 +51,14 @@
 */
 class Mail_IMAPv2_Debug extends Mail_IMAPv2 {
 
-	function Mail_IMAPv2_Debug($connection = NULL, $get_info = TRUE)
+	function __construct($connection = NULL, $get_info = TRUE)
 	{
-    	$this->Mail_IMAPv2($connection, $get_info);
+    	parent::__construct($connection, $get_info);
  
 		if (isset($_GET['dump_mid'])) {
 	        $this->debug($_GET['dump_mid']);
 		} else {
-			$this->error->push(Mail_IMAPv2_ERROR, 'error', array('method' => 'Mail_IMAPv2_Debug', 'error_string' => 'No mid was specified for debugging.'));
+			$this->error->push(Mail_IMAPv2::ERROR, 'error', array('method' => 'Mail_IMAPv2_Debug', 'error_string' => 'No mid was specified for debugging.'));
 		}
 	}
 

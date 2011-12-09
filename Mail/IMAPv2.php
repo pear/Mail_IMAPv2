@@ -35,21 +35,6 @@
 
 require_once 'PEAR/ErrorStack.php';
 
-define('Mail_IMAPv2_BODY',                                0);
-define('Mail_IMAPv2_LITERAL',                             1);
-define('Mail_IMAPv2_LITERAL_DECODE',                      2);
-
-define('Mail_IMAPv2_ERROR',                               1);
-define('Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY',       2);
-define('Mail_IMAPv2_ERROR_INVALID_OPTION',                3);
-define('Mail_IMAPv2_ERROR_INVALID_PID',                   4);
-define('Mail_IMAPv2_ERROR_INVALID_ACTION',                5);
-
-define('Mail_IMAPv2_NOTICE',                              100);
-define('Mail_IMAPv2_NOTICE_FALLBACK_PID',                 102);
-
-define('Mail_IMAPv2_FATAL',                               200);
-
 /**
 * Mail_IMAPv2 provides a flexible API for connecting to and retrieving
 * mail from mailboxes using the IMAP, POP3 or NNTP mail protocols.
@@ -112,6 +97,21 @@ define('Mail_IMAPv2_FATAL',                               200);
 *   Mail_IMAPv2 Connection Wizard
 */
 class Mail_IMAPv2 {
+
+    const BODY = 0;
+    const LITERAL = 1;
+    const LITERAL_DECODE = 2;
+
+    const ERROR = 1;
+    const ERROR_ARGUMENT_REQUIRES_ARRAY = 2;
+    const ERROR_INVALID_OPTION = 3;
+    const ERROR_INVALID_PID = 4;
+    const ERROR_INVALID_ACTION = 5;
+
+    const NOTICE = 100;
+    const NOTICE_FALLBACK_PID = 102;
+
+    const FATAL = 200;
 
     /**
     * Contains an instance of the PEAR_ErrorStack object.
@@ -269,7 +269,7 @@ class Mail_IMAPv2 {
                 $this->mailbox = $connection;
             } else {
                 $this->error->push(
-                	Mail_IMAPv2_ERROR,
+                	Mail_IMAPv2::ERROR,
                 	'error',
                 	null,
                 	'Invalid imap resource passed to constructor.'
@@ -287,12 +287,12 @@ class Mail_IMAPv2 {
     {
         return array(
             // Generic Error    
-            Mail_IMAPv2_ERROR                           => '%message%',
-            Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY   => 'Argument \'%arg%\' must be an array.',
-            Mail_IMAPv2_ERROR_INVALID_OPTION            => 'Indice \'%indice%\' for argument \'%arg%\' is not a valid option.',
-            Mail_IMAPv2_ERROR_INVALID_PID               => 'Supplied part id \'%pid%\' is not valid.',
-            Mail_IMAPv2_ERROR_INVALID_ACTION            => 'Action \'%action%\' is not a valid action for the \'%arg%\' argument.',
-            Mail_IMAPv2_NOTICE_FALLBACK_PID             => 'Fallback PID used. A fallback PID is used in the event that Mail_IMAPv2 is not able to find a valid text/plain or text/html message part. The MIME type for the fallback pid is %ftype%'
+            Mail_IMAPv2::ERROR                           => '%message%',
+            Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY   => 'Argument \'%arg%\' must be an array.',
+            Mail_IMAPv2::ERROR_INVALID_OPTION            => 'Indice \'%indice%\' for argument \'%arg%\' is not a valid option.',
+            Mail_IMAPv2::ERROR_INVALID_PID               => 'Supplied part id \'%pid%\' is not valid.',
+            Mail_IMAPv2::ERROR_INVALID_ACTION            => 'Action \'%action%\' is not a valid action for the \'%arg%\' argument.',
+            Mail_IMAPv2::NOTICE_FALLBACK_PID             => 'Fallback PID used. A fallback PID is used in the event that Mail_IMAPv2 is not able to find a valid text/plain or text/html message part. The MIME type for the fallback pid is %ftype%'
         );
     }
 
@@ -321,7 +321,7 @@ class Mail_IMAPv2 {
     function connect($uri, $get_info = true)
     {
         if (!class_exists('Net_URL') && !@include_once('Net/URL.php')) {
-			$this->error->push(Mail_IMAPv2_ERROR, 'error', null, 'Inclusion of Net_URL not successful.');
+			$this->error->push(Mail_IMAPv2::ERROR, 'error', null, 'Inclusion of Net_URL not successful.');
             return false;
         }
 
@@ -358,7 +358,7 @@ class Mail_IMAPv2 {
 
         if (false === ($this->mailbox = @imap_open($uri, urldecode($net_url->user), $net_url->pass, $opt))) {
             $this->error->push(
-            	Mail_IMAPv2_ERROR,
+            	Mail_IMAPv2::ERROR,
             	'error',
             	null,
             	'Unable to build a connection to the specified mail server.'
@@ -436,7 +436,7 @@ class Mail_IMAPv2 {
             foreach ($options as $value) {
                 if (!$this->option[$value] = @constant($constant)) {
                     $this->error->push(
-                    	Mail_IMAPv2_ERROR,
+                    	Mail_IMAPv2::ERROR,
                     	'error',
                     	null,
                     	'The constant: '.$constant.' is not defined!'
@@ -445,7 +445,7 @@ class Mail_IMAPv2 {
             }
         } else {
             $this->error->push(
-            	Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY,
+            	Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY,
             	'error',
             	array('arg' => '$options')
             );
@@ -718,7 +718,7 @@ class Mail_IMAPv2 {
                 }
             }
         } else {
-            $this->error->push(Mail_IMAPv2_ERROR_INVALID_PID, 'error', array('pid' => $pid));
+            $this->error->push(Mail_IMAPv2::ERROR_INVALID_PID, 'error', array('pid' => $pid));
             return false;
         }
 
@@ -920,7 +920,7 @@ class Mail_IMAPv2 {
         // Supplied pid must correspond to a text/html part.
         if (!empty($secureMIME) && is_array($secureMIME)) {
             $this->error->push(
-            	Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY,
+            	Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY,
             	'error',
             	array(
             		'arg' => '$secureMIME',
@@ -957,7 +957,7 @@ class Mail_IMAPv2 {
             }
         } else {
             $this->error->push(
-            	Mail_IMAPv2_ERROR,
+            	Mail_IMAPv2::ERROR,
             	'error',
             	null,
             	'Message structure does not exist.'
@@ -1054,12 +1054,12 @@ class Mail_IMAPv2 {
     * @param    string  $pid                     part id
     * @param    int     $action
     *      (optional) options for body return.  Set to one of the following:
-    *      Mail_IMAPv2_BODY (default), if part is message/rfc822 searches subparts for a
+    *      Mail_IMAPv2::BODY (default), if part is message/rfc822 searches subparts for a
     *      displayable body and returns the body decoded as part of an array.
-    *      Mail_IMAPv2_LITERAL, return the message for the specified $pid without searching
+    *      Mail_IMAPv2::LITERAL, return the message for the specified $pid without searching
     *      subparts or decoding the message (may return unparsed message) body is returned
     *      undecoded as a string.
-    *      Mail_IMAPv2_LITERAL_DECODE, same as Mail_IMAPv2_LITERAL, except message decoding is
+    *      Mail_IMAPv2::LITERAL_DECODE, same as Mail_IMAPv2::LITERAL, except message decoding is
     *      attempted from base64 or quoted-printable encoding, returns undecoded string
     *      if decoding failed.
     *
@@ -1082,14 +1082,14 @@ class Mail_IMAPv2 {
     {
         $options = (isset($this->option['fetchbody']))? $this->option['fetchbody'] : null;
 
-        if ($action == Mail_IMAPv2_LITERAL) {
+        if ($action == Mail_IMAPv2::LITERAL) {
             return @imap_fetchbody($this->mailbox, $mid, $pid, $options);
         }
 
         $this->_checkIfParsed($mid, true, $get_mime);
 
         if (false !== ($i = array_search((string) $pid, $this->structure[$mid]['pid']))) {
-            if ($action == Mail_IMAPv2_LITERAL_DECODE) {
+            if ($action == Mail_IMAPv2::LITERAL_DECODE) {
                 $msg_body = @imap_fetchbody($this->mailbox, $mid, $pid, $options);
                 return $this->_decodeMessage($msg_body, $this->structure[$mid]['encoding'][$i]);
             }
@@ -1130,7 +1130,7 @@ class Mail_IMAPv2 {
                 if (false === ($i = array_search((string) $pid, $this->structure[$mid]['pid']))) {
                     // Something's afoot!
                     $this->error->push(
-                        Mail_IMAPv2_ERROR,
+                        Mail_IMAPv2::ERROR,
                         'error',
                         array(
                             'mid' => $mid,
@@ -1146,7 +1146,7 @@ class Mail_IMAPv2 {
 
             if ($msg_body == null) {
                 $this->error->push(
-                    Mail_IMAPv2_ERROR,
+                    Mail_IMAPv2::ERROR,
                     'error',
                     array(
                         'mid' => $mid,
@@ -1174,7 +1174,7 @@ class Mail_IMAPv2 {
         else
         {
             $this->error->push(
-                Mail_IMAPv2_ERROR_INVALID_PID,
+                Mail_IMAPv2::ERROR_INVALID_PID,
                 'error',
                 array(
                     'pid' => $pid
@@ -1284,7 +1284,7 @@ class Mail_IMAPv2 {
 	            }
 	        }
         } else {
-        	$this->error->push(Mail_IMAPv2_ERROR, 'error', null, 'Message structure does not exist.');
+        	$this->error->push(Mail_IMAPv2::ERROR, 'error', null, 'Message structure does not exist.');
         }
 
         // if a text/html part was not found, call on the function again
@@ -1319,7 +1319,7 @@ class Mail_IMAPv2 {
             if (isset($this->structure[$mid]['ftype'][0])) {
                 $this->structure[$mid]['fallback'][0] = true;
             } else {
-                $this->error->push(Mail_IMAPv2_ERROR, 'error', null, 'Message contains no MIME types.');
+                $this->error->push(Mail_IMAPv2::ERROR, 'error', null, 'Message contains no MIME types.');
             }
         }
 
@@ -1330,7 +1330,7 @@ class Mail_IMAPv2 {
 
     /**
     * Searches all message parts for the specified MIME type.  Use {@link getBody}
-    * with $action option Mail_IMAPv2_LITERAL_DECODE to view MIME type parts retrieved.
+    * with $action option Mail_IMAPv2::LITERAL_DECODE to view MIME type parts retrieved.
     * If you need to access the MIME type with filename use normal {@link getBody}
     * with no action specified.
     *
@@ -1358,7 +1358,7 @@ class Mail_IMAPv2 {
                 }
             } else {
                 $this->error->push(
-                    Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY,
+                    Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY,
                     'error',
                     array(
                         'arg' => '$MIMEs',
@@ -1368,7 +1368,7 @@ class Mail_IMAPv2 {
             }
         } else {
             $this->error->push(
-                Mail_IMAPv2_ERROR,
+                Mail_IMAPv2::ERROR,
                 'error',
                 null,
                 'Member variable $this->structure[\'ftype\'] is not an array'
@@ -1404,7 +1404,7 @@ class Mail_IMAPv2 {
 
         if ($pid !== '0') {
             if (false === ($pid = $this->_defaultHeaderPid($mid, $pid))) {
-                $this->error->push(Mail_IMAPv2_ERROR_INVALID_PID, 'error', array('pid' => $pid));
+                $this->error->push(Mail_IMAPv2::ERROR_INVALID_PID, 'error', array('pid' => $pid));
                 return false;
             }
         }
@@ -1514,7 +1514,7 @@ class Mail_IMAPv2 {
 
         if (!is_object($header_info)) {
             $this->error->push(
-                Mail_IMAPv2_ERROR_INVALID_PID,
+                Mail_IMAPv2::ERROR_INVALID_PID,
                 'error',
                 array(
                     'pid' => $pid
@@ -1657,7 +1657,7 @@ class Mail_IMAPv2 {
         } else {
             // Something's afoot!
             $this->error->push(
-                Mail_IMAPv2_ERROR_INVALID_PID,
+                Mail_IMAPv2::ERROR_INVALID_PID,
                 'error',
                 array(
                     'pid' => $pid
@@ -1733,7 +1733,7 @@ class Mail_IMAPv2 {
         if (!is_array($mid)) {
             if (!@imap_delete($this->mailbox, $mid)) {
                 $this->error->push(
-                    Mail_IMAPv2_ERROR,
+                    Mail_IMAPv2::ERROR,
                     'error',
                     array(
                         'mid' => $mid
@@ -1748,7 +1748,7 @@ class Mail_IMAPv2 {
             foreach ($mid as $id) {
                 if (!@imap_delete($this->mailbox, $id)) {
                     $this->error->push(
-                        Mail_IMAPv2_ERROR,
+                        Mail_IMAPv2::ERROR,
                         'error',
                         array(
                             'mid' => $id
@@ -1778,7 +1778,7 @@ class Mail_IMAPv2 {
         if (imap_expunge($this->mailbox)) {
             return true;
         } else {
-            $this->error->push(Mail_IMAPv2_ERROR, 'error', null, 'Unable to expunge mailbox.');
+            $this->error->push(Mail_IMAPv2::ERROR, 'error', null, 'Unable to expunge mailbox.');
             return false;
         }
     }
@@ -1811,7 +1811,7 @@ class Mail_IMAPv2 {
         if ($handler) {
             foreach ($errors as $error) {
                 $this->error->push(
-                    Mail_IMAPv2_ERROR,
+                    Mail_IMAPv2::ERROR,
                     'error',
                     null,
                     $error
@@ -1848,7 +1848,7 @@ class Mail_IMAPv2 {
         if ($handler) {
             foreach ($alerts as $alert) {
                 $this->error->push(
-                    Mail_IMAPv2_ERROR,
+                    Mail_IMAPv2::ERROR,
                     'notice',
                     null,
                     $alert
@@ -1898,7 +1898,7 @@ class Mail_IMAPv2 {
 
         if (empty($q['STORAGE']['usage']) && empty($q['STORAGE']['limit'])) {
             $this->error->push(
-                Mail_IMAPv2_ERROR,
+                Mail_IMAPv2::ERROR,
                 'error',
                 null,
                 'Quota not available for this server.'
@@ -1939,7 +1939,7 @@ class Mail_IMAPv2 {
     {
         if (!is_array($mids)) {
             $this->error->push(
-                Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY,
+                Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY,
                 'error',
                 array(
                     'arg' => '$mids'
@@ -1950,7 +1950,7 @@ class Mail_IMAPv2 {
 
         if (!is_array($flags)) {
             $this->error->push(
-                Mail_IMAPv2_ERROR_ARGUMENT_REQUIRES_ARRAY,
+                Mail_IMAPv2::ERROR_ARGUMENT_REQUIRES_ARRAY,
                 'error',
                 array(
                     'arg' => '$flags'
@@ -1973,7 +1973,7 @@ class Mail_IMAPv2 {
             default:
             {
                 $this->error->push(
-                    Mail_IMAPv2_ERROR_INVALID_ACTION,
+                    Mail_IMAPv2::ERROR_INVALID_ACTION,
                     'error',
                     array(
                         'action' => $action,
@@ -2008,7 +2008,7 @@ class Mail_IMAPv2 {
     {
         if (empty($host) && !isset($this->mailboxInfo['host'])) {
             $this->error->push(
-                Mail_IMAPv2_ERROR,
+                Mail_IMAPv2::ERROR,
                 'error',
                 null,
                 'Supplied host is not valid!'
@@ -2025,7 +2025,7 @@ class Mail_IMAPv2 {
                 }
             }
         } else {
-            $this->error->push(Mail_IMAPv2_ERROR, 'error', null, 'Cannot fetch mailbox names.');
+            $this->error->push(Mail_IMAPv2::ERROR, 'error', null, 'Cannot fetch mailbox names.');
             return false;
         }
 
