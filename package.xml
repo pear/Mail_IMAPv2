@@ -15,7 +15,7 @@ This package requires the c-client extension.  To download the latest version of
   <active>yes</active>
  </lead>
  <date>2011-12-09</date>
- <time>19:42:40</time>
+ <time>19:43:30</time>
  <version>
   <release>0.2.1</release>
   <api>0.2.0</api>
@@ -27,10 +27,8 @@ This package requires the c-client extension.  To download the latest version of
  <license uri="http://www.php.net/license">PHP</license>
  <notes>
 QA release
-SVN layout
-Bug #4264  	foreach() called without argument check
-Bug #4554 	_personal header info is not properly decoded
-Bug #5621 	Mail_IMAP_connection_wizard notls bug
+Bug #8744 manageMB method does not return actual result
+Updated directory structure more
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -89,10 +87,8 @@ Bug #5621 	Mail_IMAP_connection_wizard notls bug
    <license uri="http://www.php.net/license">PHP</license>
    <notes>
 QA release
-SVN layout
-Bug #4264  	foreach() called without argument check
-Bug #4554 	_personal header info is not properly decoded
-Bug #5621 	Mail_IMAP_connection_wizard notls bug
+Bug #8744 manageMB method does not return actual result
+Updated directory structure more
    </notes>
   </release>
  </changelog>
