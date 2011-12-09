@@ -260,7 +260,7 @@ class Mail_IMAPv2 {
     * @see       connect
     * @see       imap_open
     */
-    function Mail_IMAPv2($connection = null, $get_info = true)
+    function __construct($connection = null, $get_info = true)
     {
         $this->error = new PEAR_ErrorStack('Mail_IMAPv2');
 
@@ -327,7 +327,7 @@ class Mail_IMAPv2 {
 
         $opt = (isset($this->option['open']))? $this->option['open'] : null;
 
-        $net_url =& new Net_URL($uri);
+        $net_url = new Net_URL($uri);
 
         $uri  = '{'.$net_url->host;
 
@@ -376,7 +376,7 @@ class Mail_IMAPv2 {
         return $ret;
     }
 
-    /*
+    /**
     * Adds to the {@link $mailboxInfo} member variable information about the current
     * mailbox from {@link imap_mailboxmsginfo}.
     *
@@ -488,7 +488,7 @@ class Mail_IMAPv2 {
     * multipart message.  Create part numbers as such that they are compatible with
     * {@link imap_fetchbody}.
     *
-    * @param    int           &$mid         message id
+    * @param    int           $mid         message id
     * @param    array         $sub_part     recursive
     * @param    string        $sub_pid      recursive parent part id
     * @param    int           $n            recursive counter
@@ -500,7 +500,7 @@ class Mail_IMAPv2 {
     * @see      imap_fetchbody
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_declareParts
     */
-    function _declareParts(&$mid, $sub_part = null, $sub_pid = null, $n = 0, $is_sub_part = false, $skip_part = false, $last_was_signed = false)
+    function _declareParts($mid, $sub_part = null, $sub_pid = null, $n = 0, $is_sub_part = false, $skip_part = false, $last_was_signed = false)
     {
         if (!is_array($sub_part)) {
             $opt = (isset($this->option['fetchstructure']))? $this->option['fetchstructure'] : null;
@@ -629,13 +629,13 @@ class Mail_IMAPv2 {
     * Checks if the part has been parsed, if not calls on _declareParts to
     * parse the message.
     *
-    * @param    int          &$mid         message id
+    * @param    int          $mid         message id
     * @param    bool         $checkPid
     * @return   void
     * @access   protected
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_checkIfParsed
     */
-    function _checkIfParsed(&$mid, $checkPid = true, $get_mime = 'text/html')
+    function _checkIfParsed($mid, $checkPid = true, $get_mime = 'text/html')
     {
         if (!isset($this->structure[$mid]['pid'])) {
            $this->_declareParts($mid);
@@ -656,8 +656,8 @@ class Mail_IMAPv2 {
     * {@link $attachHasAttach}, {@link $attachFname} (if a filename is present, empty
     * string otherwise).
     *
-    * @param    int           &$mid         message id
-    * @param    int           &$pid         part id
+    * @param    int           $mid         message id
+    * @param    int           $pid         part id
     * @param    bool          $ret
     *   false by default, if true returns the contents of the $in* and $attach* arrays.
     *   If false method returns BOOL.
@@ -686,7 +686,7 @@ class Mail_IMAPv2 {
     * @access   public
     * @since    PHP 4.2.0
     */
-    function getParts(&$mid, $pid = '0', $ret = false, $args = array())
+    function getParts($mid, $pid = '0', $ret = false, $args = array())
     {
         if (!isset($args['get_mime'])) {
             $args['get_mime'] = 'text/html';
@@ -729,8 +729,8 @@ class Mail_IMAPv2 {
     * Finds message parts relevant to the message part currently being displayed or
     * looks through a message and determines which is the best body to display.
     *
-    * @param    int           &$mid         message id
-    * @param    int           &$pid         part id
+    * @param    int           $mid         message id
+    * @param    int           $pid         part id
     * @param    int           $i            offset indice correlating to the pid
     * @param    str           $MIME         one of text/plain or text/html the default MIME to retrieve.
     * @param    str           $action       one of add|get
@@ -744,7 +744,7 @@ class Mail_IMAPv2 {
     * @access   private
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_scanMultipart
     */
-    function _scanMultipart(&$mid, &$pid, &$i, $MIME, $action = 'add', $look_for = 'all', $pid_add = 1, $get_alternative = true)
+    function _scanMultipart($mid, $pid, $i, $MIME, $action = 'add', $look_for = 'all', $pid_add = 1, $get_alternative = true)
     {
         // Find subparts, create variables
         // Create inline parts first, and attachments second
@@ -882,8 +882,8 @@ class Mail_IMAPv2 {
     * indexes those entries, whereas an algorithm may be ran to replace
     * inline CIDs with a part viewer.
     *
-    * @param   int      &$mid          message id
-    * @param   string   &$pid          part id
+    * @param   int      $mid          message id
+    * @param   string   $pid          part id
     * @param   array    $secureMIME    array of acceptable CID MIME types.
     *
     * The $secureMIME argument allows you to limit the types of files allowed
@@ -905,7 +905,7 @@ class Mail_IMAPv2 {
     * @access  public
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/getRelatedParts
     */
-    function getRelatedParts(&$mid, &$pid, $secureMIME = array())
+    function getRelatedParts($mid, $pid, $secureMIME = array())
     {
         // Check to see if this part has already been parsed
         $this->_checkIfParsed($mid);
@@ -974,7 +974,7 @@ class Mail_IMAPv2 {
     * @see    getRelatedParts
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_getCIDs
     */
-    function _getCIDs(&$mid, &$i, &$secureMIME, &$related)
+    function _getCIDs($mid, $i, $secureMIME, $related)
     {
         if ((isset($this->structure[$mid]['cid'][$i])) && (empty($secureMIME) || is_array($secureMIME) && in_array($this->structure[$mid]['ftype'][$i], $secureMIME))) {
             $related['cid'][] = $this->structure[$mid]['cid'][$i];
@@ -986,13 +986,13 @@ class Mail_IMAPv2 {
     /**
     * Destroys variables set by {@link getParts} and _declareParts.
     *
-    * @param    integer  &$mid   message id
+    * @param    integer  $mid   message id
     * @return   void
     * @access   public
     * @see      getParts
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/unsetParts
     */
-    function unsetParts(&$mid)
+    function unsetParts($mid)
     {
         unset($this->msg[$mid]);
         unset($this->structure[$mid]);
@@ -1002,14 +1002,14 @@ class Mail_IMAPv2 {
     /**
     * Adds information to the member variable inline part 'in' and attachment 'at' arrays.
     *
-    * @param    int     &$n   offset part counter
-    * @param    int     &$mid  message id
-    * @param    int     &$i    offset structure reference counter
+    * @param    int     $n   offset part counter
+    * @param    int     $mid  message id
+    * @param    int     $i    offset structure reference counter
     * @return   void
     * @access   private
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_addPart
     */
-    function _addPart(&$n, &$mid, &$i, $part)
+    function _addPart($n, $mid, $i, $part)
     {
         foreach ($this->fields as $field) {
             if (isset($this->structure[$mid][$field][$i]) && !empty($this->structure[$mid][$field][$i])) {
@@ -1023,14 +1023,14 @@ class Mail_IMAPv2 {
     /**
     * Returns entire unparsed message body.  See {@link imap_body} for options.
     *
-    * @param    int     &$mid      message id
+    * @param    int     $mid      message id
     * @return   string|null
     * @tutorial http://www.smilingsouls.net/index.php?content=Mail_IMAPv2/getRawMessage
     * @access   public
     * @see      imap_body
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/getRawMessage
     */
-    function getRawMessage(&$mid)
+    function getRawMessage($mid)
     {
         $opt = (isset($this->option['body']))? $this->option['body'] : null;
         return imap_body($this->mailbox, $mid, $opt);
@@ -1050,7 +1050,7 @@ class Mail_IMAPv2 {
     * either of those encoding types are specified, returns untouched otherwise.
     * Returns false on failure.
     *
-    * @param    int     &$mid                    message id
+    * @param    int     $mid                    message id
     * @param    string  $pid                     part id
     * @param    int     $action
     *      (optional) options for body return.  Set to one of the following:
@@ -1078,7 +1078,7 @@ class Mail_IMAPv2 {
     * @see      $this->getParts
     * @since    PHP 4.2.0
     */
-    function getBody(&$mid, $pid = '1', $action = 0, $get_mime = 'text/html', $attempt = 1)
+    function getBody($mid, $pid = '1', $action = 0, $get_mime = 'text/html', $attempt = 1)
     {
         $options = (isset($this->option['fetchbody']))? $this->option['fetchbody'] : null;
 
@@ -1191,13 +1191,13 @@ class Mail_IMAPv2 {
     * neither of those encoding types are specified, returns string
     * untouched.
     *
-    * @param    string  &$body           string to decode
-    * @param    string  &$encoding       encoding to decode from.
+    * @param    string  $body           string to decode
+    * @param    string  $encoding       encoding to decode from.
     * @return   string
     * @access   private
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_decodeMessage
     */
-    function _decodeMessage(&$body, &$encoding, &$charset)
+    function _decodeMessage($body, $encoding, $charset)
     {
         switch ($encoding) {
             case 'quoted-printable':
@@ -1213,7 +1213,7 @@ class Mail_IMAPv2 {
     * automatically attempts to find a text/plain part. Returns the part id for the default
     * top level message part on success. Returns false on failure.
     *
-    * @param    int     &$mid           message id
+    * @param    int     $mid           message id
     * @param    string  $getPart
     *     (optional) default MIME type to look for, one of text/html or text/plain
     *     text/html by default.
@@ -1225,7 +1225,7 @@ class Mail_IMAPv2 {
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_getDefaultPid
     * @access   private
     */
-    function _getDefaultPid(&$mid, $get_mime = 'text/html', $attempt = 1)
+    function _getDefaultPid($mid, $get_mime = 'text/html', $attempt = 1)
     {
         // Check to see if this part has already been parsed
         $this->_checkIfParsed($mid, false);
@@ -1337,13 +1337,13 @@ class Mail_IMAPv2 {
     * Returns an array of part ids on success.
     * Returns false if MIME couldn't be found, or on failure.
     *
-    * @param    int           &$mid           message id
+    * @param    int           $mid           message id
     * @param    string|array  $MIMEs          mime type to extract
     * @return   array|false
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/extractMIME
     * @access   public
     */
-    function extractMIME(&$mid, $MIMEs)
+    function extractMIME($mid, $MIMEs)
     {
         $this->_checkIfParsed($mid);
 
@@ -1382,7 +1382,7 @@ class Mail_IMAPv2 {
     * Set member variable {@link $rawHeaders} to contain Raw Header information
     * for a part.  Returns default header part id on success, returns false on failure.
     *
-    * @param    int     &$mid          message_id
+    * @param    int     $mid          message_id
     * @param    string  $pid           (optional) part id to retrieve headers for
     * @param    bool    $rtn
     *   Decides what to return. One of true|false|return_pid
@@ -1394,7 +1394,7 @@ class Mail_IMAPv2 {
     * @see      imap_fetchbody
     * @see      getHeaders
     */
-    function getRawHeaders(&$mid, $pid = '0', $rtn = true, $pid_check = false)
+    function getRawHeaders($mid, $pid = '0', $rtn = true, $pid_check = false)
     {
         $this->_checkIfParsed($mid);
 
@@ -1443,8 +1443,8 @@ class Mail_IMAPv2 {
     * If $ret is false, adds the header information to the $header member variable
     * and returns BOOL.
     *
-    * @param    int     &$mid           message id
-    * @param    string  &$pid           (optional) part id to retrieve headers for.
+    * @param    int     $mid           message id
+    * @param    string  $pid           (optional) part id to retrieve headers for.
     * @param    bool    $rtn
     *   (optional) If true return the headers, if false, assign to $header member variable.
     *
@@ -1469,7 +1469,7 @@ class Mail_IMAPv2 {
     * @see      imap_headerinfo
     * @see      imap_rfc822_parse_headers
     */
-    function getHeaders(&$mid, $pid = '0', $rtn = false, $args = array())
+    function getHeaders($mid, $pid = '0', $rtn = false, $args = array())
     {
         $this->_checkIfParsed($mid);
 
@@ -1565,13 +1565,13 @@ class Mail_IMAPv2 {
     * Parse header information from the given line and add it to the {@link $header}
     * array.  This function is only used by {@link getRawHeaders}.
     *
-    * @param     string   &$line
+    * @param     string   $line
     * @param     string   $name
     * @return    array
     * @access    private
     * @tutorial  http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_parseHeaderLine
     */
-    function _parseHeaderLine(&$mid, &$line, $name) 
+    function _parseHeaderLine($mid, $line, $name) 
     {
         if (isset($line) && count($line) >= 1) {
             $i = 0;
@@ -1605,7 +1605,7 @@ class Mail_IMAPv2 {
     * the appropriate headers.  Returns false on failure and may return a value that
     * evaluates to false, use the '===' operator for testing this function's return value.
     *
-    * @param    int     &$mid            message id
+    * @param    int     $mid            message id
     * @param    string  $pid             part id
     * @return   string|false
     * @access   private
@@ -1613,7 +1613,7 @@ class Mail_IMAPv2 {
     * @see      getRawHeaders
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/_defaultHeaderPid
     */
-    function _defaultHeaderPid(&$mid, $pid)
+    function _defaultHeaderPid($mid, $pid)
     {
         // pid is modified in this function, so don't pass by reference (will create a logic error)
         $this->_checkIfParsed($mid);
@@ -1670,13 +1670,13 @@ class Mail_IMAPv2 {
     /**
     * Destroys variables set by {@link getHeaders}.
     *
-    * @param    int     &$mid            message id
+    * @param    int     $mid            message id
     * @return   void
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/unsetHeaders
     * @access   public
     * @see      getHeaders
     */
-    function unsetHeaders(&$mid)
+    function unsetHeaders($mid)
     {
         unset($this->header[$mid]);
         return;
@@ -1721,14 +1721,14 @@ class Mail_IMAPv2 {
     * mailboxes do not remember flag settings between connections, for POP3 mailboxes
     * this function should be used in addtion to {@link expunge}.
     *
-    * @param    int     &$mid   message id
+    * @param    int     $mid   message id
     * @return   BOOL
     * @tutorial http://www.smilingsouls.net/Mail_IMAP?content=Mail_IMAP/delete
     * @access   public
     * @see      imap_delete
     * @see      expunge
     */
-    function delete(&$mid, $separator = "<br />\n")
+    function delete($mid, $separator = "<br />\n")
     {
         if (!is_array($mid)) {
             if (!@imap_delete($this->mailbox, $mid)) {
