@@ -1,0 +1,34 @@
+{
+    "authors": [
+        {
+            "email": "richy@smilingsouls.net",
+            "name": "Richard York",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Mail": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/Mail_IMAPv2",
+    "include-path": [
+        "./"
+    ],
+    "license": "PHP",
+    "name": "pear/mail_imapv2",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Mail_IMAPv2",
+        "source": "https://github.com/pear/Mail_IMAPv2"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "suggest": {
+        "pear/net_url": "Install optionally via your project's composer.json"
+    }
+}
